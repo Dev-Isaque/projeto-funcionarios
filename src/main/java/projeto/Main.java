@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println("----- Sistema de Cadastro de Funcionarios -----\n");
 
         // Formatar data
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -19,7 +20,7 @@ public class Main {
 
         List<Funcionario> funcionarios = new ArrayList<>();
 
-        // Inserindo Funcionarios
+        // Inserindo Funcionários
         funcionarios.add(new Funcionario("Maria", LocalDate.parse("18/10/2000", formatter), new BigDecimal("2009.44"), "Operador"));
         funcionarios.add(new Funcionario("João", LocalDate.parse("12/05/1990", formatter), new BigDecimal("2284.38"), "Operador"));
         funcionarios.add(new Funcionario("Caio", LocalDate.parse("02/05/1961", formatter), new BigDecimal("9836.14"), "Coordenador"));
@@ -31,12 +32,11 @@ public class Main {
         funcionarios.add(new Funcionario("Heloísa", LocalDate.parse("24/05/2003", formatter), new BigDecimal("1606.85"), "Eletricista"));
         funcionarios.add(new Funcionario("Helena", LocalDate.parse("02/09/1996", formatter), new BigDecimal("2799.93"), "Gerente"));
 
-        System.out.println("Sistema de Cadastro de Funcionarios\n");
-
-        // Removendo usuário
+        // Removendo Funcionário
+        System.out.println("----- Lista de Funcionarios -----");
         service.removerPorNome(funcionarios, "João");
-        
 
-        System.out.println(funcionarios);
+        // Lista de Funcionários
+        service.listarFuncionarios(funcionarios);
     }
 }
