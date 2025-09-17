@@ -3,6 +3,7 @@ package projeto.service;
 import projeto.model.Funcionario;
 import projeto.util.FormatadorUtil;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class FuncionarioService {
@@ -29,6 +30,22 @@ public class FuncionarioService {
                     + salario + " | "
                     + cargo + " | "
             );
+        }
+    }
+
+    public void aplicarAumento(List<Funcionario> lista, BigDecimal porcentagem) {
+        if (lista.isEmpty() || porcentagem == null) {
+            System.out.println("Nenhum funcionário cadastrado ou nenhuma porcentagem passada");
+            return;
+        }
+
+        for (Funcionario funcionario : lista) {
+
+            BigDecimal salarioAtual = funcionario.getSalario();
+
+            BigDecimal salarioAumentado = salarioAtual.multiply(porcentagem).divide(new BigDecimal("100"));
+
+            funcionario.setSalario(salarioAtual.add(salarioAumentado));
         }
     }
 

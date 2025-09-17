@@ -33,10 +33,17 @@ public class Main {
         funcionarios.add(new Funcionario("Helena", LocalDate.parse("02/09/1996", formatter), new BigDecimal("2799.93"), "Gerente"));
 
         // Removendo Funcionário
-        System.out.println("----- Lista de Funcionarios -----");
         service.removerPorNome(funcionarios, "João");
 
         // Lista de Funcionários
+        System.out.println("----- Lista de Funcionarios -----");
         service.listarFuncionarios(funcionarios);
+
+        // Aumento de 10% no salario
+        service.aplicarAumento(funcionarios, new BigDecimal("10"));
+
+        System.out.println("\n----- Lista de Funcionarios após Aumento -----");
+        service.listarFuncionarios(funcionarios);
+
     }
 }
