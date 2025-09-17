@@ -37,13 +37,17 @@ public class Main {
 
         // Lista de Funcionários
         System.out.println("----- Lista de Funcionarios -----");
-        service.listarFuncionarios(funcionarios);
+        service.listaFuncionarios(funcionarios);
 
         // Aumento de 10% no salario
         service.aplicarAumento(funcionarios, new BigDecimal("10"));
 
         System.out.println("\n----- Lista de Funcionarios após Aumento -----");
-        service.listarFuncionarios(funcionarios);
+        service.listaFuncionarios(funcionarios);
+
+        // Agrupado por Cargo
+        System.out.println("\n----- Lista de Funcionarios Agrupada por Cargos -----");
+        service.imprimirAgrupadosPorCargo(funcionarios);
 
     }
 }
