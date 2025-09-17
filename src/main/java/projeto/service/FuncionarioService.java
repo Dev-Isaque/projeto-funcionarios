@@ -85,4 +85,19 @@ public class FuncionarioService {
         listaFuncionarios(aniversariantes);
     }
 
+    public void funcionarioMaisVelho(List<Funcionario> lista) {
+        if (lista == null || lista.isEmpty()) {
+            System.out.println("Nenhum funcionário cadastrado.");
+            return;
+        }
+
+        Funcionario fMaisVelho = lista.stream()
+                .min(Comparator.comparing(Funcionario::getDataNascimento))
+                .orElse(null);
+
+        System.out.println(fMaisVelho.getNome() + " | "
+                + fMaisVelho.getIdade() + " anos"
+        );
+    }
+
 }

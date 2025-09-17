@@ -53,5 +53,9 @@ public class Main {
         System.out.println("\n----- Lista de Aniversariantes -----");
         service.imprimirAniversariantes(funcionarios, 10, 12);
 
+        // Imprimir Funcionario Mais Velho
+        System.out.println("\n----- Funcionario mais Velho -----");
+        service.funcionarioMaisVelho(funcionarios);
+
     }
 }
