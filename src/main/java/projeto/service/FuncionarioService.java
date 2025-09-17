@@ -4,6 +4,7 @@ import projeto.model.Funcionario;
 import projeto.util.FormatadorUtil;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -113,9 +114,10 @@ public class FuncionarioService {
         listaFuncionarios(listaOrdenada);
     }
 
-    public BigDecimal totalSalarios(List<Funcionario> lista) {
+    public void totalSalarios(List<Funcionario> lista) {
         if (lista == null || lista.isEmpty()) {
-            return BigDecimal.ZERO;
+            System.out.println("Nenhum funcionário cadastrado.");
+            return;
         }
 
         BigDecimal somaTotal = lista.stream()
@@ -123,8 +125,21 @@ public class FuncionarioService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         System.out.println("Soma total dos salários: " + FormatadorUtil.formatarSalario(somaTotal));
+    }
 
-        return somaTotal;
+    public void calcularSalariosMinimos(List<Funcionario> lista, BigDecimal salarioMinimo) {
+        if (lista == null || lista.isEmpty()) {
+            System.out.println("Nenhum funcionário cadastrado.");
+            return;
+        }
+
+        for (Funcionario f : lista) {
+            BigDecimal quantidade = f.getSalario().divide(salarioMinimo, 2, RoundingMode.HALF_UP);
+            System.out.println(f.getNome() +
+                    " recebe " +
+                    quantidade +
+                    " salários mínimos.");
+        }
     }
 
 }

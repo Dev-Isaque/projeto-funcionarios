@@ -32,6 +32,8 @@ public class Main {
         funcionarios.add(new Funcionario("Heloísa", LocalDate.parse("24/05/2003", formatter), new BigDecimal("1606.85"), "Eletricista"));
         funcionarios.add(new Funcionario("Helena", LocalDate.parse("02/09/1996", formatter), new BigDecimal("2799.93"), "Gerente"));
 
+
+
         // Removendo Funcionário
         service.removerPorNome(funcionarios, "João");
 
@@ -64,5 +66,10 @@ public class Main {
         // Valor Total Salario
         System.out.println("\n----- Soma de Todos Usuários -----");
         service.totalSalarios(funcionarios);
+
+        // Lista de quantos salarios minimos recebe
+        System.out.println("\n----- Lista com soma de quantos salarios mininos recebem -----");
+        service.calcularSalariosMinimos(funcionarios, new BigDecimal("1212.00"));
+
     }
 }
