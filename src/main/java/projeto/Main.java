@@ -49,5 +49,9 @@ public class Main {
         System.out.println("\n----- Lista de Funcionarios Agrupada por Cargos -----");
         service.imprimirAgrupadosPorCargo(funcionarios);
 
+        // Imprimir Aniversariantes
+        System.out.println("\n----- Lista de Aniversariantes -----");
+        service.imprimirAniversariantes(funcionarios, 10, 12);
+
     }
 }

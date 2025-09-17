@@ -4,10 +4,7 @@ import projeto.model.Funcionario;
 import projeto.util.FormatadorUtil;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class FuncionarioService {
@@ -31,7 +28,7 @@ public class FuncionarioService {
             System.out.println(nome + " | "
                     + data + " | "
                     + salario + " | "
-                    + cargo + " | "
+                    + cargo
             );
         }
     }
@@ -72,6 +69,20 @@ public class FuncionarioService {
                             FormatadorUtil.formatarSalario(f.getSalario())
             ));
         });
+    }
+
+    public void imprimirAniversariantes(List<Funcionario> lista, int... meses) {
+        if (lista == null || lista.isEmpty()) {
+            System.out.println("Nenhum funcionário cadastrado.");
+            return;
+        }
+
+        List<Funcionario> aniversariantes = lista.stream()
+                .filter(f -> Arrays.stream(meses)
+                        .anyMatch(m -> m == f.getDataNascimento().getMonthValue()))
+                .toList();
+
+        listaFuncionarios(aniversariantes);
     }
 
 }
