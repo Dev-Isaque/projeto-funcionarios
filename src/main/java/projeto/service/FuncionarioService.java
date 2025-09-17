@@ -113,4 +113,18 @@ public class FuncionarioService {
         listaFuncionarios(listaOrdenada);
     }
 
+    public BigDecimal totalSalarios(List<Funcionario> lista) {
+        if (lista == null || lista.isEmpty()) {
+            return BigDecimal.ZERO;
+        }
+
+        BigDecimal somaTotal = lista.stream()
+                .map(Funcionario::getSalario)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        System.out.println("Soma total dos salários: " + FormatadorUtil.formatarSalario(somaTotal));
+
+        return somaTotal;
+    }
+
 }

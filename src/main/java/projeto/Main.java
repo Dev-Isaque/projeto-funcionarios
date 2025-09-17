@@ -60,5 +60,9 @@ public class Main {
         // Imprimir Ordem Alfabetica
         System.out.println("\n----- Lista de Funcionario por Ordem Alfabetica -----");
         service.ordenarPorNome(funcionarios);
+
+        // Valor Total Salario
+        System.out.println("\n----- Soma de Todos Usuários -----");
+        service.totalSalarios(funcionarios);
     }
 }
