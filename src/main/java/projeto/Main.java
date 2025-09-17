@@ -8,19 +8,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("----- Sistema de Cadastro de Funcionarios -----\n");
-
-        // Formatar data
+        Scanner sc = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
         FuncionarioService service = new FuncionarioService();
-
         List<Funcionario> funcionarios = new ArrayList<>();
 
-        // Inserindo Funcionários
+        // Criando funcionários
         funcionarios.add(new Funcionario("Maria", LocalDate.parse("18/10/2000", formatter), new BigDecimal("2009.44"), "Operador"));
         funcionarios.add(new Funcionario("João", LocalDate.parse("12/05/1990", formatter), new BigDecimal("2284.38"), "Operador"));
         funcionarios.add(new Funcionario("Caio", LocalDate.parse("02/05/1961", formatter), new BigDecimal("9836.14"), "Coordenador"));
@@ -32,44 +29,67 @@ public class Main {
         funcionarios.add(new Funcionario("Heloísa", LocalDate.parse("24/05/2003", formatter), new BigDecimal("1606.85"), "Eletricista"));
         funcionarios.add(new Funcionario("Helena", LocalDate.parse("02/09/1996", formatter), new BigDecimal("2799.93"), "Gerente"));
 
+        boolean sair = false;
 
+        while (!sair) {
+            System.out.println("\n----- Sistema de Cadastro de Funcionários -----");
+            System.out.println("1 - Listar Funcionários");
+            System.out.println("2 - Remover Funcionário");
+            System.out.println("3 - Aplicar Aumento");
+            System.out.println("4 - Agrupar por Cargo");
+            System.out.println("5 - Aniversariantes");
+            System.out.println("6 - Funcionário Mais Velho");
+            System.out.println("7 - Ordem Alfabética");
+            System.out.println("8 - Total de Salários");
+            System.out.println("9 - Quantos salários mínimos recebe");
+            System.out.println("0 - Sair");
+            System.out.print("Escolha uma opção: ");
 
-        // Removendo Funcionário
-        service.removerPorNome(funcionarios, "João");
+            int opcao = sc.nextInt();
+            sc.nextLine();
 
-        // Lista de Funcionários
-        System.out.println("----- Lista de Funcionarios -----");
-        service.listaFuncionarios(funcionarios);
+            switch (opcao) {
+                case 1 -> service.listaFuncionarios(funcionarios);
+                case 2 -> {
+                    System.out.print("\nDigite o nome do funcionário a remover: ");
+                    String nome = sc.nextLine();
+                    service.removerPorNome(funcionarios, nome);
+                }
+                case 3 -> {
+                    System.out.print("\nDigite o percentual de aumento: ");
+                    BigDecimal porcentagem = sc.nextBigDecimal();
+                    service.aplicarAumento(funcionarios, porcentagem);
+                }
+                case 4 -> service.imprimirAgrupadosPorCargo(funcionarios);
+                case 5 -> {
+                    System.out.print("\nDigite os meses separados por vírgula (ex: 1,5,10): ");
+                    String[] mesesInput = sc.nextLine().split(",");
+                    int[] meses = new int[mesesInput.length];
+                    for (int i = 0; i < mesesInput.length; i++) {
+                        meses[i] = Integer.parseInt(mesesInput[i].trim());
+                    }
+                    service.imprimirAniversariantes(funcionarios, meses);
+                }
+                case 6 -> service.funcionarioMaisVelho(funcionarios);
+                case 7 -> service.ordenarPorNome(funcionarios);
+                case 8 -> service.totalSalarios(funcionarios);
+                case 9 -> service.calcularSalariosMinimos(funcionarios, new BigDecimal("1212.00"));
+                case 0 -> {
+                    System.out.println("Saindo do sistema...");
+                    sair = true;
+                }
+                default -> System.out.println("Opção inválida. Tente novamente.");
+            }
 
-        // Aumento de 10% no salario
-        service.aplicarAumento(funcionarios, new BigDecimal("10"));
+            if (!sair) {
+                System.out.println("\nPressione Enter para voltar ao menu ou digite '0' para sair...");
+                String voltar = sc.nextLine();
+                if (voltar.equals("0")) {
+                    sair = true;
+                }
+            }
+        }
 
-        System.out.println("\n----- Lista de Funcionarios após Aumento -----");
-        service.listaFuncionarios(funcionarios);
-
-        // Agrupado por Cargo
-        System.out.println("\n----- Lista de Funcionarios Agrupada por Cargos -----");
-        service.imprimirAgrupadosPorCargo(funcionarios);
-
-        // Imprimir Aniversariantes
-        System.out.println("\n----- Lista de Aniversariantes -----");
-        service.imprimirAniversariantes(funcionarios, 10, 12);
-
-        // Imprimir Funcionario Mais Velho
-        System.out.println("\n----- Funcionario mais Velho -----");
-        service.funcionarioMaisVelho(funcionarios);
-
-        // Imprimir Ordem Alfabetica
-        System.out.println("\n----- Lista de Funcionario por Ordem Alfabetica -----");
-        service.ordenarPorNome(funcionarios);
-
-        // Valor Total Salario
-        System.out.println("\n----- Soma de Todos Usuários -----");
-        service.totalSalarios(funcionarios);
-
-        // Lista de quantos salarios minimos recebe
-        System.out.println("\n----- Lista com soma de quantos salarios mininos recebem -----");
-        service.calcularSalariosMinimos(funcionarios, new BigDecimal("1212.00"));
-
+        sc.close();
     }
 }

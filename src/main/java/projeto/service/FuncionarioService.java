@@ -2,6 +2,7 @@ package projeto.service;
 
 import projeto.model.Funcionario;
 import projeto.util.FormatadorUtil;
+import projeto.util.ValidadorListaUtil;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -11,14 +12,18 @@ import java.util.stream.Collectors;
 public class FuncionarioService {
 
     public void removerPorNome(List<Funcionario> lista, String nome) {
-        lista.removeIf(f -> f.getNome().equals(nome));
+        if (ValidadorListaUtil.vaziaPadrao(lista)) return;
+
+        boolean removido = lista.removeIf(f -> f.getNome().equals(nome));
+        if (removido) {
+            System.out.println("Funcionário '" + nome + "' removido com sucesso.");
+        } else {
+            System.out.println("Nome inválido ou funcionário não cadastrado.");
+        }
     }
 
     public void listaFuncionarios(List<Funcionario> lista) {
-        if (lista.isEmpty()) {
-            System.out.println("Nenhum funcionario cadastrado.");
-            return;
-        }
+        if (ValidadorListaUtil.vaziaPadrao(lista)) return;
 
         for (Funcionario f : lista) {
             String nome = f.getNome();
@@ -35,10 +40,7 @@ public class FuncionarioService {
     }
 
     public void aplicarAumento(List<Funcionario> lista, BigDecimal porcentagem) {
-        if (lista.isEmpty() || porcentagem == null) {
-            System.out.println("Nenhum funcionário cadastrado ou nenhuma porcentagem passada");
-            return;
-        }
+        if (ValidadorListaUtil.vaziaPadrao(lista)) return;
 
         for (Funcionario f : lista) {
 
@@ -56,11 +58,7 @@ public class FuncionarioService {
     }
 
     public void imprimirAgrupadosPorCargo(List<Funcionario> lista) {
-
-        if (lista == null | lista.isEmpty()) {
-            System.out.println("Nenhum funcionario cadastrado.");
-            return;
-        }
+        if (ValidadorListaUtil.vaziaPadrao(lista)) return;
 
         agruparPorCargo(lista).forEach((cargo, funcionarios) -> {
             System.out.println("Cargo: " + cargo);
@@ -73,10 +71,7 @@ public class FuncionarioService {
     }
 
     public void imprimirAniversariantes(List<Funcionario> lista, int... meses) {
-        if (lista == null || lista.isEmpty()) {
-            System.out.println("Nenhum funcionário cadastrado.");
-            return;
-        }
+        if (ValidadorListaUtil.vaziaPadrao(lista)) return;
 
         List<Funcionario> aniversariantes = lista.stream()
                 .filter(f -> Arrays.stream(meses)
@@ -87,10 +82,7 @@ public class FuncionarioService {
     }
 
     public void funcionarioMaisVelho(List<Funcionario> lista) {
-        if (lista == null || lista.isEmpty()) {
-            System.out.println("Nenhum funcionário cadastrado.");
-            return;
-        }
+        if (ValidadorListaUtil.vaziaPadrao(lista)) return;
 
         Funcionario fMaisVelho = lista.stream()
                 .min(Comparator.comparing(Funcionario::getDataNascimento))
@@ -102,10 +94,7 @@ public class FuncionarioService {
     }
 
     public void ordenarPorNome(List<Funcionario> lista) {
-        if (lista == null || lista.isEmpty()) {
-            System.out.println("Nenhum funcionário cadastrado.");
-            return;
-        }
+        if (ValidadorListaUtil.vaziaPadrao(lista)) return;
 
         List<Funcionario> listaOrdenada = lista.stream()
                 .sorted((f1, f2) -> f1.getNome().compareToIgnoreCase(f2.getNome()))
@@ -115,10 +104,9 @@ public class FuncionarioService {
     }
 
     public void totalSalarios(List<Funcionario> lista) {
-        if (lista == null || lista.isEmpty()) {
-            System.out.println("Nenhum funcionário cadastrado.");
-            return;
-        }
+        if (ValidadorListaUtil.vaziaComMensagem(lista,
+                "Nenhum funcionário cadastrado para calcular total de salários."
+        )) return;
 
         BigDecimal somaTotal = lista.stream()
                 .map(Funcionario::getSalario)
@@ -128,10 +116,7 @@ public class FuncionarioService {
     }
 
     public void calcularSalariosMinimos(List<Funcionario> lista, BigDecimal salarioMinimo) {
-        if (lista == null || lista.isEmpty()) {
-            System.out.println("Nenhum funcionário cadastrado.");
-            return;
-        }
+        if (ValidadorListaUtil.vaziaPadrao(lista)) return;
 
         for (Funcionario f : lista) {
             BigDecimal quantidade = f.getSalario().divide(salarioMinimo, 2, RoundingMode.HALF_UP);
