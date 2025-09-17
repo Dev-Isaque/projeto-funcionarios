@@ -57,5 +57,8 @@ public class Main {
         System.out.println("\n----- Funcionario mais Velho -----");
         service.funcionarioMaisVelho(funcionarios);
 
+        // Imprimir Ordem Alfabetica
+        System.out.println("\n----- Lista de Funcionario por Ordem Alfabetica -----");
+        service.ordenarPorNome(funcionarios);
     }
 }

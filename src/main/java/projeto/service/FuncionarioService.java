@@ -100,4 +100,17 @@ public class FuncionarioService {
         );
     }
 
+    public void ordenarPorNome(List<Funcionario> lista) {
+        if (lista == null || lista.isEmpty()) {
+            System.out.println("Nenhum funcionário cadastrado.");
+            return;
+        }
+
+        List<Funcionario> listaOrdenada = lista.stream()
+                .sorted((f1, f2) -> f1.getNome().compareToIgnoreCase(f2.getNome()))
+                .collect(Collectors.toList());
+
+        listaFuncionarios(listaOrdenada);
+    }
+
 }
